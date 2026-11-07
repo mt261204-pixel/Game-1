@@ -13,6 +13,7 @@ import { QuizTab } from './components/QuizTab';
 import { ChatTab } from './components/ChatTab';
 import { DexTab } from './components/DexTab';
 import { HabitatPledgeTab } from './components/HabitatPledgeTab';
+import { AppManualModal } from './components/AppManualModal';
 import { sound } from './utils/audio';
 import confetti from 'canvas-confetti';
 
@@ -25,6 +26,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<string>('scanner');
   const [selectedAnimalForChat, setSelectedAnimalForChat] = useState<any | null>(null);
   const [targetCategoryForQuiz, setTargetCategoryForQuiz] = useState<string | null>(null);
+  const [isManualOpen, setIsManualOpen] = useState<boolean>(false);
 
   // Load or Initialize State
   const [stats, setStats] = useState<UserStats>(() => {
@@ -248,6 +250,13 @@ export default function App() {
         onToggleSound={handleToggleSound}
         activeTab={activeTab}
         onSelectTab={setActiveTab}
+        onOpenManual={() => setIsManualOpen(true)}
+      />
+
+      {/* In-App Manual & Vercel Deployment Modal */}
+      <AppManualModal
+        isOpen={isManualOpen}
+        onClose={() => setIsManualOpen(false)}
       />
 
       {/* Main Content Area */}

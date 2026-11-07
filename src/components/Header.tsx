@@ -9,6 +9,7 @@ interface HeaderProps {
   onToggleSound: () => void;
   activeTab: string;
   onSelectTab: (tab: string) => void;
+  onOpenManual: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -17,6 +18,7 @@ export const Header: React.FC<HeaderProps> = ({
   onToggleSound,
   activeTab,
   onSelectTab,
+  onOpenManual,
 }) => {
   const getRankTitle = (lvl: number) => {
     if (lvl >= 5) return '지구 가디언 마스터';
@@ -58,7 +60,7 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
 
           {/* User Status Pills */}
-          <div className="flex items-center gap-2 sm:gap-4">
+          <div className="flex items-center gap-2 sm:gap-3">
             {/* Level & XP */}
             <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-800/80 border border-slate-700/60 shadow-inner">
               <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-400 font-bold text-xs border border-emerald-500/40">
@@ -84,20 +86,23 @@ export const Header: React.FC<HeaderProps> = ({
               <span>{stats.coins.toLocaleString()}</span>
             </div>
 
-            {/* Sanctuary Health */}
-            <div
-              onClick={() => onSelectTab('sanctuary')}
-              className="hidden md:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-500/10 border border-teal-500/30 text-teal-300 font-semibold text-xs cursor-pointer hover:bg-teal-500/20 transition-colors"
-              title="나의 생태 서식지 복원도"
+            {/* App Manual & Vercel Deploy Guide Button */}
+            <button
+              onClick={() => {
+                sound.playTap();
+                onOpenManual();
+              }}
+              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-300 hover:text-white transition-all text-xs font-bold cursor-pointer shadow-sm"
+              title="앱 설명서 & Vercel 배포 가이드 열기"
             >
-              <TreePine className="w-3.5 h-3.5 text-teal-400" />
-              <span>성소 {stats.sanctuaryHealth}%</span>
-            </div>
+              <span>📖</span>
+              <span className="hidden sm:inline">앱 설명서 & 배포</span>
+            </button>
 
             {/* Sound Toggle */}
             <button
               onClick={onToggleSound}
-              className="p-2 rounded-xl bg-slate-800 border border-slate-700 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors"
+              className="p-2 rounded-xl bg-slate-800 border border-slate-700 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors cursor-pointer"
               aria-label="효과음 켜기/끄기"
               title={soundEnabled ? '효과음 끄기' : '효과음 켜기'}
             >
